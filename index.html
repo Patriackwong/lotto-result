@@ -1,62 +1,76 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>หวยฮานอย</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ผลหวยฮานอย</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
+      padding: 1rem;
       font-family: 'Prompt', sans-serif;
-      background-color: #f9f9f9;
+      background: #f5f5f5;
       display: flex;
       justify-content: center;
     }
 
-    .wrapper {
+    .lotto-container {
       position: relative;
       width: 768px;
       max-width: 100%;
     }
 
-    .wrapper img {
+    .lotto-image {
       width: 100%;
-      height: auto;
       display: block;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
 
-    .lotto-result {
+    .overlay-text {
       position: absolute;
-      color: #0033cc;
-      font-size: 24px;
+      font-size: 1.8rem;
       font-weight: bold;
+      color: #004080;
       text-align: center;
+      width: 100px;
     }
 
-    /* ตำแหน่งผลลัพธ์ */
-    #special3up    { top: 140px; left: 110px; width: 120px; }
-    #special2down  { top: 140px; right: 110px; width: 120px; }
+    /* ตำแหน่งตัวเลข - พิเศษ */
+    .ps-3up { top: 185px; left: 130px; }
+    .ps-2down { top: 185px; right: 130px; }
 
-    #normal3up     { top: 520px; left: 110px; width: 120px; }
-    #normal2down   { top: 520px; right: 110px; width: 120px; }
+    /* ปกติ */
+    .n-3up { top: 505px; left: 130px; }
+    .n-2down { top: 505px; right: 130px; }
 
-    #vip3up        { top: 890px; left: 110px; width: 120px; }
-    #vip2down      { top: 890px; right: 110px; width: 120px; }
+    /* VIP */
+    .vip-3up { top: 820px; left: 130px; }
+    .vip-2down { top: 820px; right: 130px; }
+
+    @media (max-width: 500px) {
+      .overlay-text {
+        font-size: 1.2rem;
+        width: 80px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <img src="ฮานอย.jpg" alt="หวยฮานอย">
+  <div class="lotto-container">
+    <img
+      class="lotto-image"
+      src="https://drive.google.com/uc?export=view&id=1kYtguHKv8hZzwVwO7W1IqO-3BvXpAGjm"
+      alt="ผลหวยฮานอย"
+    />
 
-    <!-- จุดแสดงผล -->
-    <div id="special3up" class="lotto-result">XXX</div>
-    <div id="special2down" class="lotto-result">XX</div>
-
-    <div id="normal3up" class="lotto-result">XXX</div>
-    <div id="normal2down" class="lotto-result">XX</div>
-
-    <div id="vip3up" class="lotto-result">XXX</div>
-    <div id="vip2down" class="lotto-result">XX</div>
+    <!-- ตำแหน่งแสดงผล -->
+    <div class="overlay-text ps-3up" id="ps_3up"></div>
+    <div class="overlay-text ps-2down" id="ps_2down"></div>
+    <div class="overlay-text n-3up" id="n_3up"></div>
+    <div class="overlay-text n-2down" id="n_2down"></div>
+    <div class="overlay-text vip-3up" id="vip_3up"></div>
+    <div class="overlay-text vip-2down" id="vip_2down"></div>
   </div>
 
   <script>
@@ -70,25 +84,19 @@
         const json = JSON.parse(text.substr(47).slice(0, -2));
         const rows = json.table.rows;
 
-        // ตัวอย่าง: สมมุติว่าข้อมูลอยู่ในรูปแบบนี้:
-        // A | B          | C
-        // ---|-------------|---------
-        // 1 | พิเศษ3ตัวบน | พิเศษ2ตัวล่าง
-        // 2 | XXX         | XX
-        // 3 | ปกติ3ตัวบน  | ปกติ2ตัวล่าง
-        // 4 | XXX         | XX
-        // 5 | VIP3ตัวบน   | VIP2ตัวล่าง
-        // 6 | XXX         | XX
+        // ค่าที่เราจะใส่ในแต่ละช่อง overlay
+        const values = {
+          ps_3up: rows[1]?.c[1]?.v || '',
+          ps_2down: rows[2]?.c[1]?.v || '',
+          n_3up: rows[3]?.c[1]?.v || '',
+          n_2down: rows[4]?.c[1]?.v || '',
+          vip_3up: rows[5]?.c[1]?.v || '',
+          vip_2down: rows[6]?.c[1]?.v || ''
+        };
 
-        // อ่านค่าจาก row/cell ตามลำดับ
-        document.getElementById("special3up").textContent  = rows[1].c[1]?.v ?? 'XXX';
-        document.getElementById("special2down").textContent = rows[1].c[2]?.v ?? 'XX';
-
-        document.getElementById("normal3up").textContent   = rows[3].c[1]?.v ?? 'XXX';
-        document.getElementById("normal2down").textContent = rows[3].c[2]?.v ?? 'XX';
-
-        document.getElementById("vip3up").textContent      = rows[5].c[1]?.v ?? 'XXX';
-        document.getElementById("vip2down").textContent    = rows[5].c[2]?.v ?? 'XX';
+        for (const id in values) {
+          document.getElementById(id).textContent = values[id];
+        }
       });
   </script>
 </body>
