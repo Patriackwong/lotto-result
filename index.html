@@ -6,39 +6,24 @@
   <title>ผลหวยวันนี้</title>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
+    body {
+      font-family: 'Prompt', sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      background: url('https://www.prachachat.net/wp-content/uploads/2022/04/%E0%B8%AB%E0%B8%A7%E0%B8%A2-%E0%B8%A5%E0%B8%AD%E0%B8%95%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B8%B5%E0%B9%88-2-728x485.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
 
-    body, html {
-      height: 100%;
-      font-family: 'Prompt', sans-serif;
-    }
-
-    body {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      background: #f0f0f0;
-    }
-
-    /* พื้นหลังแบบเลือนลาง */
+    /* ทำให้พื้นหลังเบลอ */
     body::before {
       content: "";
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-image: url('https://www.prachachat.net/wp-content/uploads/2022/04/%E0%B8%AB%E0%B8%A7%E0%B8%A2-%E0%B8%A5%E0%B8%AD%E0%B8%95%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B8%B5%E0%B9%88-2-728x485.jpg');
-      background-size: cover;
-      background-position: center;
-      filter: blur(6px);
-      opacity: 0.25;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(8px);
+      background-color: rgba(255, 255, 255, 0.3);
       z-index: -1;
     }
 
@@ -46,36 +31,46 @@
       background: rgba(255, 255, 255, 0.95);
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      padding: 2.5rem;
-      max-width: 900px;
-      width: 100%;
+      padding: 2rem;
+      max-width: 960px;
+      margin: 4rem auto;
     }
 
     h1 {
       display: flex;
       align-items: center;
       font-size: 2rem;
-      margin-bottom: 1.5rem;
-      color: #C62828;
+      color: #00796B;
+      margin-bottom: 1rem;
     }
 
     h1 img {
-      width: 42px;
+      width: 40px;
       height: auto;
       margin-right: 1rem;
     }
 
-    #today {
-      margin-left: 0.5rem;
+    .center-images {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .center-images img {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
 
     table {
       border-collapse: collapse;
       width: 100%;
       margin-top: 1rem;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
     }
 
     th, td {
@@ -85,26 +80,31 @@
     }
 
     th {
-      background-color: #C62828;
+      background-color: #00796B;
       color: white;
+      font-weight: 600;
     }
 
     tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: #f1f1f1;
     }
 
     tr:hover {
-      background-color: #fce4ec;
+      background-color: #e0f2f1;
     }
 
     @media (max-width: 600px) {
       .card {
-        padding: 1.2rem;
+        padding: 1rem;
+        margin: 2rem;
       }
 
       h1 {
         font-size: 1.5rem;
-        flex-wrap: wrap;
+      }
+
+      .center-images img {
+        max-width: 90%;
       }
 
       th, td {
@@ -120,10 +120,17 @@
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg" alt="ธงชาติไทย">
       ผลหวยประจำวันที่ <span id="today"></span>
     </h1>
+
+    <div class="center-images">
+      <img src="https://drive.google.com/uc?export=view&id=1fEoKHra1iq5zOcdsuzJg4LKEJOhK05rh" alt="หวยไทย">
+      <img src="https://drive.google.com/uc?export=view&id=14FRyTBkkl5Sfzp2_3PZcGde8rP4d9Qr7" alt="หวยลาว">
+    </div>
+
     <div id="lotto"></div>
   </div>
 
   <script>
+    // แปลงวันที่ไทย
     function formatThaiDate(date) {
       const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
                       "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
