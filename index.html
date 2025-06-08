@@ -5,16 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ผลหวยวันนี้</title>
   <style>
-    body { font-family: sans-serif; padding: 2rem; }
-    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    body { font-family: sans-serif; padding: 2rem; background: #f4f4f4; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; background: #fff; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    h1 { margin-bottom: 1rem; color: #333; }
   </style>
 </head>
 <body>
-  <h1>ผลหวยล่าสุด</h1>
+  <h1 id="title">ผลหวยประจำวันที่ ...</h1>
   <div id="lotto"></div>
 
   <script>
+    // ฟังก์ชันแปลงวันที่เป็นภาษาไทย
+    function formatThaiDate(date) {
+      const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+                      "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+      const d = date.getDate();
+      const m = months[date.getMonth()];
+      const y = date.getFullYear();
+      return `${d} ${m} ${y}`;
+    }
+
+    // อัปเดตหัวข้อ
+    const today = new Date();
+    const title = document.getElementById("title");
+    title.textContent = `ผลหวยประจำวันที่ ${formatThaiDate(today)}`;
+
     const sheetID = '1KfkvO09PAEI12wLn7taGXGutXgbBdK4bjVpcMPwNg_A';
     const sheetName = 'Sheet1';
     const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
