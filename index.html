@@ -14,7 +14,6 @@
       background-size: cover;
     }
 
-    /* ทำให้พื้นหลังเบลอ */
     body::before {
       content: "";
       position: fixed;
@@ -59,12 +58,17 @@
       flex-wrap: wrap;
     }
 
-    .center-images img {
+    .center-images a img {
       max-width: 300px;
       width: 100%;
       height: auto;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+    }
+
+    .center-images a:hover img {
+      transform: scale(1.05);
     }
 
     table {
@@ -122,15 +126,18 @@
     </h1>
 
     <div class="center-images">
-      <img src="https://i.ibb.co/847jqxT5/7fb4c6f0-0933-4f96-bdf0-feb13fd3e160-removebg-preview.png" alt="บ้านหวย99">
-      <img src="https://i.ibb.co/HLv9B990/Gemini-Generated-Image-jqp37zjqp37zjqp3-removebg-preview.png" alt="LuckyStyle">
+      <a href="https://lin.ee/eeaC7fg" target="_blank" title="บ้านหวย99">
+        <img src="https://i.ibb.co/847jqxT5/7fb4c6f0-0933-4f96-bdf0-feb13fd3e160-removebg-preview.png" alt="บ้านหวย99">
+      </a>
+      <a href="https://lin.ee/TgiohSe" target="_blank" title="LuckyStyle">
+        <img src="https://i.ibb.co/HLv9B990/Gemini-Generated-Image-jqp37zjqp37zjqp3-removebg-preview.png" alt="LuckyStyle">
+      </a>
     </div>
 
     <div id="lotto"></div>
   </div>
 
   <script>
-    // แปลงวันที่ไทย
     function formatThaiDate(date) {
       const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
                       "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
