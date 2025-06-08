@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ผลหวยวันนี้</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>ผลหวยล่าสุด</h1>
+  <div id="lotto"></div>
+
+  <script>
+    const sheetID = 'YOUR_SHEET_ID';
+    const sheetName = 'Sheet1';
+    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+    fetch(url)
+      .then(res => res.text())
+      .then(text => {
+        const json = JSON.parse(text.substr(47).slice(0, -2));
+        const rows = json.table.rows;
+        let html = '<table><tr>';
+
+        // Header
+        json.table.cols.forEach(col => {
+          html += `<th>${col.label}</th>`;
+        });
+        html += '</tr>';
+
+        // Data rows
+        rows.forEach(row => {
+          html += '<tr>';
+          row.c.forEach(cell => {
+            html += `<td>${cell?.v ?? ''}</td>`;
+          });
+          html += '</tr>';
+        });
+
+        html += '</table>';
+        document.getElementById('lotto').innerHTML = html;
+      });
+  </script>
+</body>
+</html>
