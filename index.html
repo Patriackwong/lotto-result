@@ -20,11 +20,15 @@
     const sheetName = "Sheet1";
     const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-    // แปลงวันที่เป็นภาษาไทย
-    function formatThaiDate(dateObj) {
-      const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-                      "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-      return `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+    function formatThaiDateFromGoogleDateString(googleDateStr) {
+      const match = googleDateStr.match(/Date\((\d+),(\d+),(\d+)\)/);
+      if (!match) return "ไม่พบวันที่";
+      const [ , year, month, day ] = match.map(Number);
+      const monthsThai = [
+        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+      ];
+      return `${day} ${monthsThai[month]} ${year}`;
     }
 
     fetch(url)
@@ -34,14 +38,14 @@
         const rows = json.table.rows;
         const cols = json.table.cols;
 
-        // แสดงวันไทย
+        // ✅ แสดงวันที่ไทย
         const dateCell = rows[0].c[0];
-        if (dateCell && dateCell.v) {
-          const rawDate = new Date(dateCell.v);
-          document.getElementById("thaiDate").textContent = formatThaiDate(rawDate);
+        if (dateCell && dateCell.f) {
+          const thaiDate = formatThaiDateFromGoogleDateString(dateCell.f);
+          document.getElementById("thaiDate").textContent = thaiDate;
         }
 
-        // สร้างตาราง
+        // ✅ สร้างตารางผลหวย
         let html = '<table><tr>';
         cols.forEach(col => {
           html += `<th>${col.label}</th>`;
