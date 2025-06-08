@@ -6,15 +6,40 @@
   <title>ผลหวยวันนี้</title>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
       font-family: 'Prompt', sans-serif;
-      background-image: url('https://as2.ftcdn.net/v2/jpg/04/50/56/13/1000_F_450561347_zIokGlk9mLjU5iRe2YqSq3A5BD5ErabK.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      padding: 2rem;
+    }
+
+    body {
+      position: relative;
       display: flex;
       justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      background: #f0f0f0;
+    }
+
+    /* พื้นหลังแบบเลือนลาง */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('https://www.prachachat.net/wp-content/uploads/2022/04/%E0%B8%AB%E0%B8%A7%E0%B8%A2-%E0%B8%A5%E0%B8%AD%E0%B8%95%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B8%B5%E0%B9%88-2-728x485.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: blur(6px);
+      opacity: 0.25;
+      z-index: -1;
     }
 
     .card {
@@ -105,7 +130,7 @@
       const d = date.getDate();
       const m = months[date.getMonth()];
       const y = date.getFullYear();
-      return ` ${d} ${m} ${y}`;  // มีเว้นวรรคหน้า d
+      return ` ${d} ${m} ${y}`;
     }
 
     document.getElementById('today').textContent = formatThaiDate(new Date());
