@@ -1,129 +1,49 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ผลหวยย้อนหลัง</title>
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+  <title>ผลหวยวันนี้</title>
   <style>
-    :root {
-      --primary: #2c3e50;
-      --secondary: #ecf0f1;
-      --accent: #f39c12;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Kanit', sans-serif;
-      background: var(--secondary);
-      color: var(--primary);
-      line-height: 1.6;
-      padding: 1rem;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      padding: 2rem;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: var(--accent);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      padding: 0.75rem;
-      text-align: center;
-    }
-    thead {
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px 8px 0 0;
-    }
-    tbody tr:nth-child(odd) {
-      background: #f9f9f9;
-    }
-    tbody tr:hover {
-      background: #fde3a7;
-    }
-    th:first-child, td:first-child {
-      text-align: left;
-      padding-left: 1.5rem;
-    }
-    @media (max-width: 600px) {
-      th, td { padding: 0.5rem; font-size: 0.9rem; }
-      .container { padding: 1rem; }
-    }
+    body { font-family: sans-serif; padding: 2rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>ผลหวยย้อนหลัง</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>วันที่</th>
-          <th>รางวัลที่ 1</th>
-          <th>3 ตัวบน</th>
-          <th>2 ตัวล่าง</th>
-        </tr>
-      </thead>
-      <tbody id="lotto-body">
-        <!-- จะถูกเติมด้วย JS -->
-      </tbody>
-    </table>
-  </div>
+  <h1>ผลหวยล่าสุด</h1>
+  <div id="lotto"></div>
 
   <script>
-    const sheetID = "1KfkvO09PAEI12wLn7taGXGutXgbBdK4bjVpcMPwNg_A";
-    const sheetName = "Sheet1";
+    const sheetID = 'YOUR_SHEET_ID';
+    const sheetName = 'Sheet1';
     const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-    const months = [
-      "ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
-      "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."
-    ];
-
-    function parseDate(fstr) {
-      const m = fstr.match(/Date\((\d+),\s*(\d+),\s*(\d+)\)/);
-      if (!m) return '-';
-      const [, y, mo, d] = m.map(Number);
-      return `${d} ${months[mo]} ${y}`;
-    }
-
     fetch(url)
-      .then(r => r.text())
-      .then(t => {
-        const json = JSON.parse(t.substr(47).slice(0,-2));
+      .then(res => res.text())
+      .then(text => {
+        const json = JSON.parse(text.substr(47).slice(0, -2));
         const rows = json.table.rows;
-        const tbody = document.getElementById("lotto-body");
-        tbody.innerHTML = '';
+        let html = '<table><tr>';
 
-        rows.forEach(r => {
-          const dateF = r.c[0]?.f;
-          const v1 = r.c[1]?.v || '-';
-          const v3 = r.c[2]?.v || '-';
-          const v2 = r.c[3]?.v || '-';
-          const date = dateF ? parseDate(dateF) : '-';
-
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${date}</td>
-            <td>${v1}</td>
-            <td>${v3}</td>
-            <td>${v2}</td>
-          `;
-          tbody.appendChild(tr);
+        // Header
+        json.table.cols.forEach(col => {
+          html += `<th>${col.label}</th>`;
         });
-      })
-      .catch(err => console.error('Error fetching data:', err));
+        html += '</tr>';
+
+        // Data rows
+        rows.forEach(row => {
+          html += '<tr>';
+          row.c.forEach(cell => {
+            html += `<td>${cell?.v ?? ''}</td>`;
+          });
+          html += '</tr>';
+        });
+
+        html += '</table>';
+        document.getElementById('lotto').innerHTML = html;
+      });
   </script>
 </body>
 </html>
