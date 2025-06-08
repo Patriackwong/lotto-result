@@ -1,110 +1,65 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ผลหวยวันนี้</title>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>หวยฮานอย</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Prompt', sans-serif;
-      background: linear-gradient(135deg, #e0f7fa, #ffffff);
-      padding: 2rem;
+      background-color: #f9f9f9;
       display: flex;
       justify-content: center;
     }
 
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      padding: 2.5rem;
-      max-width: 900px;
+    .wrapper {
+      position: relative;
+      width: 768px;
+      max-width: 100%;
+    }
+
+    .wrapper img {
       width: 100%;
-      transition: transform 0.3s;
-    }
-
-    .card:hover {
-      transform: scale(1.01);
-    }
-
-    h1 {
-      display: flex;
-      align-items: center;
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      color: #00796B;
-    }
-
-    h1 img {
-      width: 40px;
       height: auto;
-      margin-right: 1rem;
+      display: block;
     }
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 1rem;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 12px;
+    .lotto-result {
+      position: absolute;
+      color: #0033cc;
+      font-size: 24px;
+      font-weight: bold;
       text-align: center;
     }
 
-    th {
-      background-color: #00796B;
-      color: white;
-      font-weight: 600;
-    }
+    /* ตำแหน่งผลลัพธ์ */
+    #special3up    { top: 140px; left: 110px; width: 120px; }
+    #special2down  { top: 140px; right: 110px; width: 120px; }
 
-    tr:nth-child(even) {
-      background-color: #f1f1f1;
-    }
+    #normal3up     { top: 520px; left: 110px; width: 120px; }
+    #normal2down   { top: 520px; right: 110px; width: 120px; }
 
-    tr:hover {
-      background-color: #e0f2f1;
-    }
-
-    @media (max-width: 600px) {
-      .card {
-        padding: 1.2rem;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      th, td {
-        padding: 8px;
-        font-size: 0.9rem;
-      }
-    }
+    #vip3up        { top: 890px; left: 110px; width: 120px; }
+    #vip2down      { top: 890px; right: 110px; width: 120px; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg" alt="ธงชาติไทย">ผลหวยประจำวันที่ <span id="today"></span></h1>
-    <div id="lotto"></div>
+  <div class="wrapper">
+    <img src="ฮานอย.jpg" alt="หวยฮานอย">
+
+    <!-- จุดแสดงผล -->
+    <div id="special3up" class="lotto-result">XXX</div>
+    <div id="special2down" class="lotto-result">XX</div>
+
+    <div id="normal3up" class="lotto-result">XXX</div>
+    <div id="normal2down" class="lotto-result">XX</div>
+
+    <div id="vip3up" class="lotto-result">XXX</div>
+    <div id="vip2down" class="lotto-result">XX</div>
   </div>
 
   <script>
-    function formatThaiDate(date) {
-      const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-                      "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-      const d = date.getDate();
-      const m = months[date.getMonth()];
-      const y = date.getFullYear();
-      return `${d} ${m} ${y}`;
-    }
-
-    document.getElementById('today').textContent = formatThaiDate(new Date());
-
     const sheetID = '1KfkvO09PAEI12wLn7taGXGutXgbBdK4bjVpcMPwNg_A';
     const sheetName = 'Sheet1';
     const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
@@ -114,23 +69,26 @@
       .then(text => {
         const json = JSON.parse(text.substr(47).slice(0, -2));
         const rows = json.table.rows;
-        let html = '<table><tr>';
 
-        json.table.cols.forEach(col => {
-          html += `<th>${col.label}</th>`;
-        });
-        html += '</tr>';
+        // ตัวอย่าง: สมมุติว่าข้อมูลอยู่ในรูปแบบนี้:
+        // A | B          | C
+        // ---|-------------|---------
+        // 1 | พิเศษ3ตัวบน | พิเศษ2ตัวล่าง
+        // 2 | XXX         | XX
+        // 3 | ปกติ3ตัวบน  | ปกติ2ตัวล่าง
+        // 4 | XXX         | XX
+        // 5 | VIP3ตัวบน   | VIP2ตัวล่าง
+        // 6 | XXX         | XX
 
-        rows.forEach(row => {
-          html += '<tr>';
-          row.c.forEach(cell => {
-            html += `<td>${cell?.v ?? ''}</td>`;
-          });
-          html += '</tr>';
-        });
+        // อ่านค่าจาก row/cell ตามลำดับ
+        document.getElementById("special3up").textContent  = rows[1].c[1]?.v ?? 'XXX';
+        document.getElementById("special2down").textContent = rows[1].c[2]?.v ?? 'XX';
 
-        html += '</table>';
-        document.getElementById('lotto').innerHTML = html;
+        document.getElementById("normal3up").textContent   = rows[3].c[1]?.v ?? 'XXX';
+        document.getElementById("normal2down").textContent = rows[3].c[2]?.v ?? 'XX';
+
+        document.getElementById("vip3up").textContent      = rows[5].c[1]?.v ?? 'XXX';
+        document.getElementById("vip2down").textContent    = rows[5].c[2]?.v ?? 'XX';
       });
   </script>
 </body>
