@@ -10,7 +10,7 @@
       font-family: 'Prompt', sans-serif;
       margin: 0;
       padding: 0;
-      background: url('https://www.prachachat.net/wp-content/uploads/2022/04/%E0%B8%AB%E0%B8%A7%E0%B8%A2-%E0%B8%A5%E0%B8%AD%E0%B8%95%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%94%E0%B8%B5-%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%AD%E0%B8%81%E0%B8%9C%E0%B8%A5-%E0%B8%A3%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%A1%E0%B8%B5%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%B8%E0%B8%AA%E0%B9%81%E0%B8%88%E0%B8%99%E0%B8%99%E0%B9%89%E0%B8%AD%E0%B8%87-%E0%B8%8A%E0%B8%9A%E0%B8%97%E0%B8%B0-%E0%B8%96%E0%B8%99%E0%B8%9A%E0%B8%B8%E0%B8%88%E0%B8%A3%E0%B8%A2%E0%B8%81%E0%B8%9A%E0%B9%8C-%E0%B8%8A%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%97%E0%B8%B3%E0%B8%AB%E0%B8%A3%E0%B8%B0%E0%B8%9F%E0%B8%97%E0%B8%9C%E0%B8%A7%E0%B8%A2%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%97%E0%B8%B9%E0%B9%88-%E0%B8%8A%E0%B8%95%E0%B8%B2%9C%E0%B8%9E%E0%B8%B1%E0%B8%95%E0%B8%9A%E0%B9%80%E0%B8%AD%E0%B8%AB%E0%B8%99-%E0%B8%99%E0%B8%B1%E0%B8%8A%E0%B8%AA%E0%B8%99%E0%B8%97%E0%B8%81)
+      background: url('https://www.prachachat.net/wp-content/uploads/2022/04/%E0%B8%AB%E0%B8%A7%E0%B8%A2-%E0%B8%A5%E0%B8%AD%E0%B8%95%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B8%B5%E0%B9%88-2-728x485.jpg') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -75,11 +75,7 @@
       border-collapse: collapse;
       width: 100%;
       margin-top: 1rem;
-      font-size: 1.2rem;
-      max-width: 100%; /* ทำให้ตารางไม่เกินขนาดหน้าจอ */
-      table-layout: fixed; /* ทำให้ตารางไม่ขยายเกินไป */
-      word-wrap: break-word; /* ทำให้คำในเซลล์ไม่ยาวเกินไป */
-      overflow-x: auto; /* ทำให้มีการเลื่อนแนวนอนได้เมื่อจอเล็ก */
+      font-size: 1.2rem; /* ขยายขนาดตัวอักษร */
     }
 
     th, td {
@@ -93,9 +89,6 @@
       color: white;
       font-weight: 600;
       font-size: 1.3rem; /* ขนาดตัวอักษรหัวตาราง */
-      position: sticky;
-      top: 0;
-      z-index: 1; /* ทำให้แน่ใจว่าหัวตารางอยู่บนสุด */
     }
 
     tr:nth-child(even) {
@@ -134,16 +127,11 @@
 
       table {
         font-size: 1.1rem;
-        overflow-x: auto; /* เพิ่มการเลื่อนแนวนอน */
       }
 
       th, td {
         padding: 12px;
         font-size: 1.1rem;
-      }
-
-      h1 {
-        font-size: 1.2rem; /* ปรับขนาดตัวอักษรหัวเรื่อง */
       }
     }
   </style>
@@ -176,14 +164,14 @@
       const d = date.getDate();
       const m = months[date.getMonth()];
       const y = date.getFullYear();
-      return ` ${d} ${m} ${y}`;
+      return  ${d} ${m} ${y};
     }
 
     document.getElementById('today').textContent = formatThaiDate(new Date());
 
     const sheetID = '1KfkvO09PAEI12wLn7taGXGutXgbBdK4bjVpcMPwNg_A';
     const sheetName = 'Sheet1';
-    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+    const url = https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName};
 
     fetch(url)
       .then(res => res.text())
@@ -193,7 +181,7 @@
         let html = '<table><tr>';
 
         json.table.cols.forEach(col => {
-          html += `<th>${col.label}</th>`;
+          html += <th>${col.label}</th>;
         });
         html += '</tr>';
 
@@ -201,7 +189,7 @@
           html += '<tr>';
           row.c.forEach((cell, index) => {
             // เพิ่มเงื่อนไขเพื่อแยกแถวที่ไม่ให้รวมกัน
-            html += `<td>${cell?.v ?? ''}</td>`;
+            html += <td>${cell?.v ?? ''}</td>;
           });
           html += '</tr>';
         });
