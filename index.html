@@ -10,7 +10,7 @@
       font-family: 'Prompt', sans-serif;
       margin: 0;
       padding: 0;
-      background: url('https://www.prachachat.net/wp-content/uploads/2022/04/%E0%B8%AB%E0%B8%A7%E0%B8%A2-%E0%B8%A5%E0%B8%AD%E0%B8%95%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B8%B5%E0%B9%88-2-728x485.jpg') no-repeat center center fixed;
+      background: url('https://www.prachachat.net/wp-content/uploads/2022/04/%E0%B8%AB%E0%B8%A7%E0%B8%A2-%E0%B8%A5%E0%B8%AD%E0%B8%95%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B9%8C-2-728x485.jpg') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -75,7 +75,11 @@
       border-collapse: collapse;
       width: 100%;
       margin-top: 1rem;
-      font-size: 1.2rem; /* ขยายขนาดตัวอักษร */
+      font-size: 1.2rem;
+      max-width: 100%; /* ทำให้ตารางไม่เกินขนาดหน้าจอ */
+      table-layout: fixed; /* ทำให้ตารางไม่ขยายเกินไป */
+      word-wrap: break-word; /* ทำให้คำในเซลล์ไม่ยาวเกินไป */
+      overflow-x: auto; /* ทำให้มีการเลื่อนแนวนอนได้เมื่อจอเล็ก */
     }
 
     th, td {
@@ -130,6 +134,7 @@
 
       table {
         font-size: 1.1rem;
+        overflow-x: auto; /* เพิ่มการเลื่อนแนวนอน */
       }
 
       th, td {
