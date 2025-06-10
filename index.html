@@ -187,7 +187,8 @@
 
         rows.forEach(row => {
           html += '<tr>';
-          row.c.forEach(cell => {
+          row.c.forEach((cell, index) => {
+            // เพิ่มเงื่อนไขเพื่อแยกแถวที่ไม่ให้รวมกัน
             html += `<td>${cell?.v ?? ''}</td>`;
           });
           html += '</tr>';
