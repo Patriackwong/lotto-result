@@ -33,14 +33,17 @@
       padding: 2rem;
       max-width: 960px;
       margin: 4rem auto;
+      position: relative;
     }
 
     h1 {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       font-size: 2rem;
       color: #00796B;
       margin-bottom: 1rem;
+      flex-wrap: wrap;
     }
 
     h1 img {
@@ -49,25 +52,21 @@
       margin-right: 1rem;
     }
 
-    .center-images {
+    .header-images {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
+      gap: 1rem;
+      flex-shrink: 0;
     }
 
-    .center-images a img {
-      max-width: 300px;
-      width: 100%;
+    .header-images a img {
+      width: 60px;
       height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       transition: transform 0.2s ease;
     }
 
-    .center-images a:hover img {
+    .header-images a:hover img {
       transform: scale(1.05);
     }
 
@@ -75,12 +74,12 @@
       border-collapse: collapse;
       width: 100%;
       margin-top: 1rem;
-      font-size: 1.2rem; /* ขยายขนาดตัวอักษร */
+      font-size: 1.2rem;
     }
 
     th, td {
       border: 1px solid #ddd;
-      padding: 16px; /* เพิ่ม padding */
+      padding: 16px;
       text-align: center;
     }
 
@@ -88,7 +87,6 @@
       background-color: #00796B;
       color: white;
       font-weight: 600;
-      font-size: 1.3rem; /* ขนาดตัวอักษรหัวตาราง */
     }
 
     tr:nth-child(even) {
@@ -111,22 +109,17 @@
         align-items: flex-start;
       }
 
-      .center-images {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .center-images a img {
-        max-width: 80%;
+      .header-images {
+        justify-content: flex-start;
+        margin-top: 0.5rem;
       }
 
       table {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
 
       th, td {
-        padding: 12px;
-        font-size: 1.1rem;
+        padding: 10px;
       }
     }
   </style>
@@ -134,22 +127,19 @@
 <body>
   <div class="card">
     <h1>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg" alt="ธงชาติไทย">
-      ผลหวยประจำวันที่ <span id="today"></span>
+      <span><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg" alt="ธงชาติไทย"> ผลหวยประจำวันที่ <span id="today"></span></span>
+      <div class="header-images">
+        <a href="https://lin.ee/TgiohSe" target="_blank" title="บ้านหวย99">
+          <img src="https://i.ibb.co/847jqxT5/7fb4c6f0-0933-4f96-bdf0-feb13fd3e160-removebg-preview.png" alt="บ้านหวย99">
+        </a>
+        <a href="https://lin.ee/eeaC7fg" target="_blank" title="LuckyStyle">
+          <img src="https://i.ibb.co/HLv9B990/Gemini-Generated-Image-jqp37zjqp37zjqp3-removebg-preview.png" alt="LuckyStyle">
+        </a>
+      </div>
     </h1>
 
-    <!-- ตารางผลหวย แสดงก่อน -->
+    <!-- ตารางผลหวย -->
     <div id="lotto"></div>
-
-    <!-- รูปภาพแสดงหลังตาราง -->
-    <div class="center-images">
-      <a href="https://lin.ee/TgiohSe" target="_blank" title="บ้านหวย99">
-        <img src="https://i.ibb.co/847jqxT5/7fb4c6f0-0933-4f96-bdf0-feb13fd3e160-removebg-preview.png" alt="บ้านหวย99">
-      </a>
-      <a href="https://lin.ee/eeaC7fg" target="_blank" title="LuckyStyle">
-        <img src="https://i.ibb.co/HLv9B990/Gemini-Generated-Image-jqp37zjqp37zjqp3-removebg-preview.png" alt="LuckyStyle">
-      </a>
-    </div>
   </div>
 
   <script>
