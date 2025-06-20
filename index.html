@@ -97,6 +97,39 @@
       background-color: #e0f2f1;
     }
 
+    /* New button styles */
+    .bet-button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .bet-button {
+      display: inline-block;
+      padding: 1.5rem 3rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+      background-color: #FF5722; /* A vibrant orange color */
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .bet-button:hover {
+      background-color: #E64A19; /* Darker orange on hover */
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .bet-button:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
     @media (max-width: 768px) {
       .card {
         padding: 1rem;
@@ -121,6 +154,11 @@
       th, td {
         padding: 10px;
       }
+
+      .bet-button {
+        padding: 1rem 2rem;
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -139,6 +177,10 @@
     </h1>
 
     <div id="lotto"></div>
+
+    <div class="bet-button-container">
+      <a href="https://xn--95-ftiadyb5a.com/user/register?from=QUhDN2o0cE1GemlwclYyTjRUTzFUdz09" target="_blank" class="bet-button">แทงหวยกดเลย</a>
+    </div>
   </div>
 
   <script>
@@ -148,14 +190,14 @@
       const d = date.getDate();
       const m = months[date.getMonth()];
       const y = date.getFullYear();
-      return ` ${d} ${m} ${y}`;
+      return  ${d} ${m} ${y};
     }
 
     document.getElementById('today').textContent = formatThaiDate(new Date());
 
     const sheetID = '1KfkvO09PAEI12wLn7taGXGutXgbBdK4bjVpcMPwNg_A';
     const sheetName = 'Sheet1';
-    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+    const url = https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName};
 
     fetch(url)
       .then(res => res.text())
@@ -166,7 +208,7 @@
 
         // Add table headers
         json.table.cols.forEach(col => {
-          html += `<th>${col.label}</th>`;
+          html += <th>${col.label}</th>;
         });
         html += '</tr>';
 
@@ -180,9 +222,9 @@
             // สมมติว่า "บน" อยู่ในคอลัมน์ที่สอง (index 1) และ "ล่าง" อยู่ในคอลัมน์ที่สาม (index 2)
             // คุณอาจต้องปรับค่า index เหล่านี้ให้ตรงกับโครงสร้าง Google Sheet ของคุณ
             if (index === 1 || index === 2) { 
-              html += `<td style="color: red; font-weight: bold;">${cellValue}</td>`;
+              html += <td style="color: red; font-weight: bold;">${cellValue}</td>;
             } else {
-              html += `<td>${cellValue}</td>`;
+              html += <td>${cellValue}</td>;
             }
           });
           html += '</tr>';
